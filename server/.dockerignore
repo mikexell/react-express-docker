@@ -1,0 +1,112 @@
+# .dockerignore
+# =================================================================
+# DOCKER IGNORE FILE FOR BACKEND
+# =================================================================
+# This file tells Docker which files/folders to EXCLUDE when copying to the image
+# Similar to .gitignore but for Docker builds
+# =================================================================
+
+# WHY USE .dockerignore?
+# 1. Smaller image size - don't copy unnecessary files
+# 2. Faster builds - less data to transfer
+# 3. Security - don't include sensitive files
+# 4. Cache efficiency - avoid invalidating cache with irrelevant file changes
+
+# =================================================================
+# NODE.JS SPECIFIC
+# =================================================================
+
+# node_modules folder
+# DON'T copy node_modules from host machine
+# We'll install dependencies fresh inside the container using npm install
+# This ensures consistency across different environments
+node_modules
+
+# npm debug logs
+# These are temporary files created when npm has errors
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Package manager lock files (optional to exclude)
+# Some teams prefer to exclude these, others include them for consistency
+# package-lock.json
+# yarn.lock
+
+# =================================================================
+# DEVELOPMENT FILES
+# =================================================================
+
+# Environment variable files
+# These often contain secrets and API keys - NEVER include in Docker image
+.env
+.env.local
+.env.*.local
+
+# IDE and editor files
+# These are specific to your local development environment
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# =================================================================
+# VERSION CONTROL
+# =================================================================
+
+# Git directory
+# No need to include git history in the Docker image
+.git
+.gitignore
+
+# =================================================================
+# TESTING AND CI/CD
+# =================================================================
+
+# Test coverage reports
+coverage/
+.nyc_output/
+
+# Test files (optional - depends on if you run tests in container)
+*.test.js
+*.spec.js
+__tests__/
+
+# =================================================================
+# DOCKER FILES
+# =================================================================
+
+# Docker files themselves
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# =================================================================
+# OPERATING SYSTEM FILES
+# =================================================================
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Linux
+.Trash-*
+
+# =================================================================
+# DOCUMENTATION
+# =================================================================
+
+# README files (optional - depends on if you want docs in image)
+README.md
+LICENSE
+
+# =================================================================
+# BUILD OUTPUT
+# =================================================================
+
+# Distribution/build folders (if any)
+dist/
+build/

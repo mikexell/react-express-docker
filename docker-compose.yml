@@ -1,0 +1,427 @@
+# docker-compose.yml
+# =================================================================
+# DOCKER COMPOSE CONFIGURATION
+# =================================================================
+# Docker Compose is a tool for defining and running multi-container Docker applications
+# This file defines how our frontend and backend containers work together
+# =================================================================
+#
+# WHAT IS DOCKER COMPOSE?
+# - Defines multiple services (containers) in one YAML file
+# - Manages networking between containers automatically
+# - Handles service dependencies and startup order
+# - Simplifies running complex multi-container applications
+#
+# SINGLE COMMAND TO RUN EVERYTHING:
+# docker compose up --build
+# =================================================================
+
+# =================================================================
+# VERSION
+# =================================================================
+# Docker Compose file format version
+# Version 3.8 is stable and widely supported
+# Different versions support different features
+# See: https://docs.docker.com/compose/compose-file/compose-versioning/
+version: "3.8"
+
+# =================================================================
+# SERVICES
+# =================================================================
+# Services are the containers that make up your application
+# Each service is a separate container that runs independently
+# But they can communicate with each other over a shared network
+services:
+  # ===============================================================
+  # BACKEND SERVICE (Express API Server)
+  # ===============================================================
+  backend:
+    # ===========================================================
+    # BUILD CONFIGURATION
+    # ===========================================================
+    # Tells Docker Compose how to build this service's image
+    build:
+      # context: Path to the directory containing Dockerfile
+      # This is relative to where docker-compose.yml is located
+      # ./server means: look in the "server" folder
+      # Docker will find server/Dockerfile and use it to build
+      context: ./server
+      
+      # dockerfile: Name of the Dockerfile to use
+      # Default is "Dockerfile", but you can specify different names
+      # Example: Dockerfile.dev, Dockerfile.prod
+      # We explicitly specify "Dockerfile" for clarity
+      dockerfile: Dockerfile
+
+    # ===========================================================
+    # CONTAINER NAME
+    # ===========================================================
+    # Custom name for the running container
+    # Without this, Docker generates a random name
+    # 
+    # WHY SET A NAME?
+    # - Easier to identify: docker ps shows "fullstack_backend"
+    # - Easier to debug: docker logs fullstack_backend
+    # - Easier to access: docker exec -it fullstack_backend sh
+    # 
+    # DEFAULT BEHAVIOR (without container_name):
+    # Docker names it: <project>_backend_1
+    # Example: react-express-docker_backend_1
+    container_name: fullstack_backend
+
+    # ===========================================================
+    # PORT MAPPING
+    # ===========================================================
+    # Maps ports from container to host machine
+    # Format: "HOST_PORT:CONTAINER_PORT"
+    # 
+    # SYNTAX BREAKDOWN:
+    # "4000:4000" means:
+    # - Container listens on port 4000 (defined in server/index.js)
+    # - Host machine can access it on port 4000
+    # - http://localhost:4000 → container's port 4000
+    #
+    # WHY EXPOSE THIS PORT?
+    # - Allows direct access to backend from host (for testing)
+    # - Can use Postman to test: http://localhost:4000/api/message
+    # - Frontend container will use "backend:4000" (not localhost:4000)
+    #
+    # ALTERNATIVE MAPPINGS:
+    # "8080:4000" → Access via localhost:8080, container still uses 4000
+    # "127.0.0.1:4000:4000" → Only accessible from localhost (more secure)
+    ports:
+      - "4000:4000"
+
+    # ===========================================================
+    # RESTART POLICY
+    # ===========================================================
+    # Controls when Docker automatically restarts the container
+    # 
+    # OPTIONS:
+    # - "no" → Never restart (default)
+    # - "always" → Always restart, even after host reboot
+    # - "unless-stopped" → Restart unless manually stopped (our choice)
+    # - "on-failure" → Only restart if container exits with error
+    #
+    # WHY "unless-stopped"?
+    # - Container restarts if it crashes
+    # - Container restarts if host machine reboots
+    # - But if you manually stop it (docker stop), it stays stopped
+    # - Good balance for development and production
+    #
+    # SCENARIO:
+    # 1. Server crashes due to unhandled error → Container restarts
+    # 2. You run "docker compose down" → Container stops and stays stopped
+    # 3. Host machine reboots → Container restarts automatically
+    restart: unless-stopped
+
+    # ===========================================================
+    # ENVIRONMENT VARIABLES (Optional)
+    # ===========================================================
+    # Uncomment to pass environment variables to the container
+    # These are accessible via process.env in Node.js
+    # 
+    # environment:
+    #   - NODE_ENV=production
+    #   - PORT=4000
+    #   - DATABASE_URL=postgresql://user:pass@db:5432/mydb
+    #
+    # ALTERNATIVE: Use .env file
+    # env_file:
+    #   - ./server/.env
+
+    # ===========================================================
+    # VOLUMES (Optional)
+    # ===========================================================
+    # Uncomment for development hot-reload
+    # Mounts host directory into container
+    # Changes on host immediately reflect in container
+    #
+    # volumes:
+    #   - ./server:/app
+    #   - /app/node_modules  # Preserve container's node_modules
+    #
+    # WHY USE VOLUMES?
+    # - Development: Change code without rebuilding image
+    # - Persistence: Database data survives container restarts
+    # - Sharing: Multiple containers can share data
+
+    # ===========================================================
+    # DEPENDS_ON (Optional)
+    # ===========================================================
+    # If backend needed a database, we'd use:
+    # depends_on:
+    #   - database
+    # This ensures database starts before backend
+
+    # ===========================================================
+    # HEALTHCHECK (Optional but recommended)
+    # ===========================================================
+    # Uncomment to add health monitoring
+    # Docker checks if service is actually working
+    #
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:4000/api/message"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 40s
+
+  # ===============================================================
+  # FRONTEND SERVICE (React + Nginx)
+  # ===============================================================
+  client:
+    # ===========================================================
+    # BUILD CONFIGURATION
+    # ===========================================================
+    build:
+      # Context: client folder contains Dockerfile and React source
+      context: ./client
+      
+      # Use the Dockerfile in client folder
+      # This Dockerfile does multi-stage build:
+      # Stage 1: Build React app with Node
+      # Stage 2: Serve with nginx
+      dockerfile: Dockerfile
+
+    # ===========================================================
+    # CONTAINER NAME
+    # ===========================================================
+    # Easy identification in docker ps
+    container_name: fullstack_frontend
+
+    # ===========================================================
+    # PORT MAPPING
+    # ===========================================================
+    # "80:80" means:
+    # - nginx listens on port 80 inside container
+    # - Host machine port 80 maps to container port 80
+    # - Access frontend: http://localhost (port 80 is default HTTP port)
+    #
+    # WHY PORT 80?
+    # - Standard HTTP port
+    # - http://localhost automatically uses port 80
+    # - No need to specify port in URL
+    #
+    # ALTERNATIVE:
+    # "8080:80" → Access via http://localhost:8080
+    # Use this if port 80 is already in use on host
+    ports:
+      - "80:80"
+
+    # ===========================================================
+    # RESTART POLICY
+    # ===========================================================
+    # Same as backend - restart unless manually stopped
+    restart: unless-stopped
+
+    # ===========================================================
+    # DEPENDS_ON - Service Dependencies
+    # ===========================================================
+    # Tells Docker Compose to start backend BEFORE frontend
+    # 
+    # WHAT IT DOES:
+    # 1. Docker starts backend container first
+    # 2. Once backend is running, Docker starts frontend
+    # 
+    # WHAT IT DOESN'T DO:
+    # - Doesn't wait for backend to be "healthy"
+    # - Just waits for container to start
+    # - Backend might still be initializing
+    #
+    # WHY WE NEED THIS:
+    # - Frontend's nginx.conf proxies to "backend:4000"
+    # - If backend isn't started, nginx can't resolve "backend"
+    # - Could cause startup errors
+    #
+    # FOR STRICTER CONTROL:
+    # Use healthcheck on backend + depends_on with condition:
+    # depends_on:
+    #   backend:
+    #     condition: service_healthy
+    depends_on:
+      - backend
+
+    # ===========================================================
+    # ENVIRONMENT VARIABLES (Optional)
+    # ===========================================================
+    # For frontend, environment variables are baked into build
+    # But you can pass runtime config to nginx
+    #
+    # environment:
+    #   - NGINX_HOST=localhost
+    #   - NGINX_PORT=80
+
+# =================================================================
+# NETWORKS (Auto-created)
+# =================================================================
+# Docker Compose automatically creates a network for services
+# All services can communicate using their service names as hostnames
+#
+# AUTOMATIC NETWORK FEATURES:
+# - Service discovery: "backend" resolves to backend container's IP
+# - Isolation: Containers on same network can talk, others can't
+# - DNS: Docker provides internal DNS for name resolution
+#
+# WHAT THIS MEANS:
+# - client container can reach backend via: http://backend:4000
+# - backend cannot reach outside containers (security)
+# - Host machine can access via: http://localhost:80 and :4000
+#
+# MANUAL NETWORK DEFINITION (optional):
+# networks:
+#   app-network:
+#     driver: bridge
+#
+# services:
+#   backend:
+#     networks:
+#       - app-network
+#   client:
+#     networks:
+#       - app-network
+
+# =================================================================
+# VOLUMES (Persistent Storage)
+# =================================================================
+# Define named volumes for persistent data
+# Useful for databases, uploaded files, etc.
+#
+# volumes:
+#   postgres-data:
+#   redis-data:
+#
+# Then use in services:
+# services:
+#   database:
+#     volumes:
+#       - postgres-data:/var/lib/postgresql/data
+
+# =================================================================
+# USAGE COMMANDS
+# =================================================================
+#
+# START SERVICES (build if needed):
+# docker compose up --build
+#
+# START IN BACKGROUND:
+# docker compose up -d
+#
+# STOP SERVICES:
+# docker compose down
+#
+# STOP AND REMOVE VOLUMES:
+# docker compose down -v
+#
+# VIEW LOGS:
+# docker compose logs
+# docker compose logs backend
+# docker compose logs -f client  # Follow logs in real-time
+#
+# RESTART SERVICES:
+# docker compose restart
+# docker compose restart backend
+#
+# REBUILD SPECIFIC SERVICE:
+# docker compose build backend
+# docker compose up -d --no-deps --build backend
+#
+# VIEW RUNNING CONTAINERS:
+# docker compose ps
+#
+# EXECUTE COMMAND IN CONTAINER:
+# docker compose exec backend sh
+# docker compose exec client sh
+#
+# SCALE SERVICES (run multiple instances):
+# docker compose up -d --scale backend=3
+#
+# VIEW RESOURCE USAGE:
+# docker compose top
+#
+# =================================================================
+# TROUBLESHOOTING
+# =================================================================
+#
+# 1. Port already in use:
+#    - Change port mapping: "8080:80" instead of "80:80"
+#    - Or stop process using port: netstat -ano | findstr :80
+#
+# 2. Cannot connect to backend from frontend:
+#    - Check service name matches in nginx.conf
+#    - Verify backend container is running: docker compose ps
+#    - Check backend logs: docker compose logs backend
+#
+# 3. Changes not reflecting:
+#    - Rebuild: docker compose up --build
+#    - Clear cache: docker compose build --no-cache
+#    - Remove old images: docker compose down --rmi all
+#
+# 4. Container keeps restarting:
+#    - Check logs: docker compose logs <service>
+#    - Check if main process exits immediately
+#    - Verify Dockerfile CMD is correct
+#
+# 5. Network issues:
+#    - Recreate network: docker compose down && docker compose up
+#    - Check network: docker network ls
+#    - Inspect network: docker network inspect <network-name>
+#
+# =================================================================
+# PRODUCTION CONSIDERATIONS
+# =================================================================
+#
+# 1. Use environment variables for secrets:
+#    env_file: .env.production
+#
+# 2. Add resource limits:
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.5'
+#          memory: 512M
+#
+# 3. Enable logging driver:
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "10m"
+#        max-file: "3"
+#
+# 4. Use specific image tags (not 'latest'):
+#    image: node:22-alpine (instead of node:alpine)
+#
+# 5. Implement health checks:
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost/health"]
+#
+# 6. Use secrets for sensitive data:
+#    secrets:
+#      db_password:
+#        file: ./db_password.txt
+#
+# =================================================================
+# DEVELOPMENT VS PRODUCTION
+# =================================================================
+#
+# DEVELOPMENT:
+# - docker-compose.yml (this file)
+# - Expose ports for direct access
+# - Use restart: unless-stopped
+# - Mount volumes for hot-reload
+# - More verbose logging
+#
+# PRODUCTION:
+# - docker-compose.prod.yml
+# - Only expose necessary ports
+# - Use restart: always
+# - No volume mounts (use built code)
+# - Resource limits and monitoring
+# - Secrets management
+# - Health checks
+# - Multiple replicas for load balancing
+#
+# Run production config:
+# docker compose -f docker-compose.prod.yml up -d
+#
+# =================================================================

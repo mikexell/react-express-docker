@@ -1,0 +1,146 @@
+<!doctype html>
+<!-- =================================================================
+     HTML ENTRY POINT FOR REACT APPLICATION
+     =================================================================
+     This is the main HTML file that loads your React application.
+     It serves as the "shell" or "container" for your React app.
+     ================================================================= -->
+<html lang="en">
+  <head>
+    <!-- ============================================================
+         CHARACTER ENCODING
+         ============================================================
+         utf-8 supports all languages and special characters worldwide -->
+    <meta charset="utf-8" />
+
+    <!-- ============================================================
+         RESPONSIVE META TAG
+         ============================================================
+         Makes the website mobile-friendly by:
+         - Setting viewport width to device width
+         - Setting initial zoom to 100%
+         - Essential for responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ============================================================
+         PAGE TITLE
+         ============================================================
+         This appears in:
+         - Browser tab
+         - Bookmarks
+         - Search engine results
+         - Social media shares -->
+    <title>Full Stack Deploy Demo</title>
+
+    <!-- ============================================================
+         OPTIONAL: Additional meta tags you might want to add
+         ============================================================ -->
+    
+    <!-- Description for SEO (Search Engine Optimization) -->
+    <!-- <meta name="description" content="Full-stack React and Express application with Docker" /> -->
+    
+    <!-- Favicon (icon that appears in browser tab) -->
+    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+    
+    <!-- Theme color for mobile browsers -->
+    <!-- <meta name="theme-color" content="#000000" /> -->
+
+    <!-- Open Graph tags for social media sharing (Facebook, LinkedIn) -->
+    <!-- <meta property="og:title" content="Full Stack Deploy Demo" /> -->
+    <!-- <meta property="og:description" content="React + Express + Docker" /> -->
+    <!-- <meta property="og:image" content="/preview.png" /> -->
+
+    <!-- Twitter Card tags -->
+    <!-- <meta name="twitter:card" content="summary_large_image" /> -->
+    <!-- <meta name="twitter:title" content="Full Stack Deploy Demo" /> -->
+  </head>
+  
+  <body>
+    <!-- ============================================================
+         ROOT DIV - React Mount Point
+         ============================================================
+         This empty div is where React will inject your entire app
+         
+         HOW IT WORKS:
+         1. Browser loads this HTML file
+         2. Browser sees empty <div id="root"></div>
+         3. Browser loads main.jsx (see script tag below)
+         4. React finds this div by id="root"
+         5. React renders your App component inside this div
+         6. All your React components appear here
+         
+         IMPORTANT:
+         - Do NOT put content inside this div manually
+         - React will replace/manage everything inside
+         - The id="root" must match the id in main.jsx
+         ============================================================ -->
+    <div id="root"></div>
+
+    <!-- ============================================================
+         REACT APPLICATION ENTRY POINT
+         ============================================================
+         This script tag loads the React application
+         
+         BREAKDOWN:
+         - type="module" = Enables ES6 module syntax (import/export)
+         - src="/src/main.jsx" = Path to the main JavaScript/React file
+         
+         HOW VITE PROCESSES THIS:
+         1. Vite sees type="module"
+         2. Vite loads /src/main.jsx
+         3. Vite transpiles JSX to JavaScript
+         4. Vite bundles all imports and dependencies
+         5. In development: Serves files directly with HMR
+         6. In production: Creates optimized bundle in dist/
+         
+         WHY .jsx EXTENSION?
+         - Indicates file contains JSX syntax
+         - JSX = JavaScript XML (HTML-like syntax in JavaScript)
+         - Vite automatically handles JSX transformation
+         ============================================================ -->
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- ============================================================
+         PRODUCTION BUILD NOTES
+         ============================================================
+         When you run "npm run build":
+         1. Vite processes this HTML file
+         2. Vite compiles /src/main.jsx and all React components
+         3. Vite creates optimized JavaScript bundles
+         4. Vite replaces the script tag with actual bundle paths
+         5. Output goes to dist/ folder
+         
+         Example production HTML output:
+         <script type="module" crossorigin src="/assets/index-abc123.js"></script>
+         <link rel="stylesheet" href="/assets/index-def456.css">
+         ============================================================ -->
+
+    <!-- ============================================================
+         NOSCRIPT FALLBACK
+         ============================================================
+         Message shown if JavaScript is disabled in browser
+         React REQUIRES JavaScript, so we inform the user -->
+    <noscript>
+      <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif;">
+        <h1>JavaScript Required</h1>
+        <p>This application requires JavaScript to run.</p>
+        <p>Please enable JavaScript in your browser settings.</p>
+      </div>
+    </noscript>
+
+    <!-- ============================================================
+         OPTIONAL: Loading spinner/placeholder
+         ============================================================
+         You can add a loading indicator inside #root that shows
+         before React loads:
+         
+         <div id="root">
+           <div style="text-align: center; padding: 50px;">
+             <div>Loading...</div>
+           </div>
+         </div>
+         
+         React will replace this when it mounts
+         ============================================================ -->
+  </body>
+</html>

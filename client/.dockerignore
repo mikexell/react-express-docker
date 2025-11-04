@@ -1,0 +1,242 @@
+# .dockerignore
+# =================================================================
+# DOCKER IGNORE FILE FOR FRONTEND
+# =================================================================
+# Tells Docker which files/folders to EXCLUDE when building the image
+# Similar to .gitignore but for Docker COPY commands
+# =================================================================
+
+# =================================================================
+# NODE.JS / NPM
+# =================================================================
+
+# node_modules
+# CRITICAL: Don't copy from host machine
+# - Host node_modules might be for different OS (Windows vs Linux)
+# - Could cause compatibility issues
+# - We run npm install inside container for clean dependencies
+# - Copying would waste time and increase image size
+node_modules
+
+# npm logs and lock files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Optional npm cache directory
+.npm
+
+# =================================================================
+# BUILD OUTPUT
+# =================================================================
+
+# dist folder (production build output)
+# We build inside Docker, so host's dist is irrelevant
+# Actually we want to exclude this to avoid cache issues
+dist
+build
+.vite
+
+# Vite cache
+.cache
+
+# =================================================================
+# DEVELOPMENT FILES
+# =================================================================
+
+# Environment files - NEVER include secrets in images!
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env*.local
+
+# Development server output
+*.local
+
+# =================================================================
+# VERSION CONTROL
+# =================================================================
+
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# =================================================================
+# IDE & EDITOR FILES
+# =================================================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs (WebStorm, IntelliJ)
+.idea/
+*.iml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# =================================================================
+# OPERATING SYSTEM FILES
+# =================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.Trash-*
+.directory
+
+# =================================================================
+# TESTING
+# =================================================================
+
+# Test coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# Test files (optional - depends if you run tests in container)
+**/*.test.js
+**/*.test.jsx
+**/*.spec.js
+**/*.spec.jsx
+__tests__/
+__mocks__/
+
+# =================================================================
+# DOCKER FILES
+# =================================================================
+
+# Docker files themselves
+Dockerfile
+Dockerfile.*
+.dockerignore
+docker-compose.yml
+docker-compose*.yml
+
+# =================================================================
+# CI/CD
+# =================================================================
+
+# GitHub Actions
+.github/
+
+# GitLab CI
+.gitlab-ci.yml
+
+# CircleCI
+.circleci/
+
+# Travis CI
+.travis.yml
+
+# =================================================================
+# DOCUMENTATION
+# =================================================================
+
+# README and docs (usually not needed in production image)
+README.md
+README
+CHANGELOG.md
+LICENSE
+docs/
+*.md
+
+# =================================================================
+# MISC
+# =================================================================
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Log files
+logs/
+*.log
+
+# Backup files
+*.bak
+*.backup
+
+# =================================================================
+# PROJECT-SPECIFIC (customize as needed)
+# =================================================================
+
+# Storybook
+.storybook/
+storybook-static/
+
+# Next.js (if using)
+.next/
+out/
+
+# Nuxt.js (if using)
+.nuxt/
+
+# Gatsby (if using)
+.cache/
+public/
+
+# =================================================================
+# WHY .dockerignore IS IMPORTANT
+# =================================================================
+# 
+# 1. SECURITY:
+#    - Prevents accidentally including .env files with secrets
+#    - Excludes .git folder (could contain sensitive history)
+#
+# 2. PERFORMANCE:
+#    - Smaller context = faster docker build
+#    - Excluding node_modules saves significant time
+#
+# 3. CORRECTNESS:
+#    - Ensures clean builds
+#    - Prevents host OS dependencies from affecting container
+#
+# 4. IMAGE SIZE:
+#    - Smaller context = smaller intermediate layers
+#    - Better layer caching
+#
+# =================================================================
+# DEBUGGING TIPS
+# =================================================================
+#
+# To see what Docker actually copies:
+# 1. Build with verbose output: docker build --progress=plain .
+# 2. Check build context size (shown at start of build)
+# 3. If context is large (>50MB), review this file
+#
+# To test .dockerignore:
+# 1. Run: docker build -t test .
+# 2. Check logs for "COPY . ." step
+# 3. Inspect image: docker run -it test sh
+# 4. List files: ls -la
+#
+# =================================================================

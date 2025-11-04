@@ -1,0 +1,240 @@
+# =================================================================
+# .gitignore - Git Ignore File
+# =================================================================
+# Tells Git which files and directories to NOT track
+# Prevents committing unnecessary or sensitive files to repository
+# =================================================================
+
+# =================================================================
+# NODE.JS / NPM
+# =================================================================
+
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Production builds
+/dist
+/build
+/.next
+/out
+
+# npm/yarn logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Yarn files
+.yarn-integrity
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# =================================================================
+# ENVIRONMENT VARIABLES (CRITICAL - DON'T COMMIT SECRETS!)
+# =================================================================
+
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env*.local
+
+# =================================================================
+# OPERATING SYSTEM FILES
+# =================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =================================================================
+# IDE / EDITOR FILES
+# =================================================================
+
+# Visual Studio Code
+.vscode/
+.history/
+*.code-workspace
+
+# JetBrains IDEs (IntelliJ, WebStorm, PHPStorm, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessio.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Atom
+.atom/
+
+# =================================================================
+# DOCKER FILES
+# =================================================================
+
+# Docker volumes (if using local volumes)
+docker-volumes/
+
+# Docker Compose override files
+docker-compose.override.yml
+
+# =================================================================
+# BUILD OUTPUTS
+# =================================================================
+
+# Build directories
+dist/
+build/
+.vite/
+.cache/
+.parcel-cache/
+
+# Coverage directories
+coverage/
+.nyc_output/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# =================================================================
+# LOGS
+# =================================================================
+
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# =================================================================
+# TESTING
+# =================================================================
+
+# Test coverage
+/coverage
+/.nyc_output
+*.lcov
+
+# Jest cache
+.jest/
+
+# =================================================================
+# TEMPORARY FILES
+# =================================================================
+
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+*.swp
+*.swo
+
+# =================================================================
+# MISC
+# =================================================================
+
+# Lock files (optional - some teams commit these)
+# Uncomment if you want to ignore them:
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Storybook
+.storybook/
+storybook-static/
+
+# Serverless
+.serverless/
+
+# FuseBox
+.fusebox/
+
+# DynamoDB Local
+.dynamodb/
+
+# TernJS
+.tern-port
+
+# Stores VSCode versions used for testing
+.vscode-test
+
+# =================================================================
+# PROJECT SPECIFIC
+# =================================================================
+
+# Add any project-specific files or folders here
+# Example:
+# /uploads
+# /private

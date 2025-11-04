@@ -1,9 +1,13 @@
-> Structure:
->
-> * `client/` — React (Vite) app
-> * `server/` — Express API
-> * `docker-compose.yml` — builds and runs both containers
-> * `client/nginx.conf` — nginx in front of the built frontend (and proxies `/api` to backend)
+# Full-Stack Docker Deployment Guide
+## React (Vite) + Express + Docker + Nginx
+
+A complete, production-ready full-stack application demonstrating modern deployment practices with comprehensive comments for learners at all levels.
+
+**Project Structure:**
+* `client/` — React (Vite) app
+* `server/` — Express API
+* `docker-compose.yml` — builds and runs both containers
+* `client/nginx.conf` — nginx in front of the built frontend (and proxies `/api` to backend)
 
 ---
 
@@ -117,6 +121,22 @@ EXPOSE 4000
 
 # start the server
 CMD ["npm", "start"]
+```
+> also add docker ignore.
+
+```
+docker build -t express-server .
+```
+```
+docker run -p 4000:4000 express-server
+```
+> Test using `Postman`, the Backend is running good in Docker.</br>
+> Also need port binding - `Default local host Port binding` in SERVER `index.js`.
+
+```js
+app.listen(PORT, "0.0.0.0", () =>
+...
+);
 ```
 
 Notes:
@@ -434,6 +454,8 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
+
+> add `Docker ignore`
 
 ## client/nginx.conf
 
