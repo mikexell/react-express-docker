@@ -33,13 +33,23 @@ full-stack-deploy/
 
 ## server/package.json
 
+Open terminal in `server` folder.
+
+```npm
+npm init -y
+```
+```
+npm i express cors
+```
+
 ```json
 {
   "name": "server",
   "version": "1.0.0",
-  "type": "module",
+  "main": "index.js",
+  "type": "module", //use import, not required type
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js" //"node --watch index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -50,6 +60,8 @@ full-stack-deploy/
 
 ## server/index.js
 
+- create a new file.
+
 ```js
 // server/index.js
 // Simple Express server with CORS enabled and one API route.
@@ -59,7 +71,7 @@ import cors from "cors";
 
 const app = express();
 
-// Parse JSON bodies (application/json)
+//middlewears - Parse JSON bodies (application/json)
 app.use(express.json());
 
 // Enable CORS for all origins.
@@ -77,6 +89,13 @@ app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
 ```
+
+```
+npm run start
+```
+
+> send `GET` request to `postman` http://localhost:4000 </br>
+> Now try `GET` for http://localhost:4000/api/message
 
 ## server/Dockerfile
 
