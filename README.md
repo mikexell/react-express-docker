@@ -1,7 +1,9 @@
 # Full-Stack Docker Deployment Guide
 ## React (Vite) + Express + Docker + Nginx
 
+<details>
 <img width="975" height="639" alt="Screenshot 2025-11-05 002404" src="https://github.com/user-attachments/assets/11a751c3-f97a-4c74-b4f4-172a29635d20" />
+</details>
 
 A complete, production-ready full-stack application demonstrating modern deployment practices with comprehensive comments for learners at all levels.
 
